@@ -1,5 +1,6 @@
 package com.apruebaxtreme.backend.models;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -25,14 +26,14 @@ public class PeliculaCatalogo {
 
     private String poster_path;
     private String title;
-    private Date release_date;
+    private LocalDate release_date;
     private String original_language;
     private Float vote_average;
 
     @Column(columnDefinition = "TEXT")
     private String overview;
 
-    public PeliculaCatalogo(String poster_path, String title, Date release_date, String original_language,
+    public PeliculaCatalogo(String poster_path, String title, LocalDate release_date, String original_language,
             Float vote_average, String overview) {
         this.poster_path = poster_path;
         this.title = title;
