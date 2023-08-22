@@ -9,6 +9,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import com.apruebaxtreme.backend.dto.MovieResultsDTO;
+
 
 @SpringBootApplication
 public class BackendApplication implements CommandLineRunner{
@@ -23,10 +25,11 @@ public class BackendApplication implements CommandLineRunner{
 
 	public void run(String[] args){
 
-		String url = "https://api.themoviedb.org/3/search/movie";
+		String url = "https://api.themoviedb.org/3/search/movie?query=rings";
 		String api_key="d8a89bad4afd76e415ee96730b766d8b";
-		restTemplate.exchange(null, null, null, null, null)
+		ResponseEntity<MovieResultsDTO> movieResponse = restTemplate.exchange(url+"&api_key="+api_key, HttpMethod.GET, null, MovieResultsDTO.class);
 
+		movieResponse.getBody().getResults().stream().forEach(movie->System.out.println(movie));
 	}
 
 	
