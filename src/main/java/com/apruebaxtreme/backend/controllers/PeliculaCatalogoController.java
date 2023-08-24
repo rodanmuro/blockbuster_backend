@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,6 +43,20 @@ public class PeliculaCatalogoController {
         PeliculaCatalogo peliculaCatalogoGuardada = peliculaCatalogoService.guardarPeliculaCatalogo(peliculaCatalogo);
 
         return new ResponseEntity<PeliculaCatalogo>(peliculaCatalogoGuardada, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/peliculacatalogo/{idPelicula}")
+    public ResponseEntity<HttpStatus> borrarPeliculaCatalogo(@PathVariable Integer idPelicula){
+        try {
+
+            peliculaCatalogoService.borrarPeliculasCatalogo(idPelicula);
+            return new ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);
+            
+        } catch (NotFoundException nfe) {
+            return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+        }catch(Exception e){
+            return new ResponseEntity<HttpStatus>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     
 }
