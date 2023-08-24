@@ -23,7 +23,7 @@ import lombok.ToString;
 public class PeliculaCatalogo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPelicula;
 
     private String poster_path;

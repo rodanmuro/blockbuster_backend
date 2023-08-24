@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.apruebaxtreme.backend.dto.MovieResultsDTO;
-import com.apruebaxtreme.backend.services.TheMovieDBService;
+import com.apruebaxtreme.backend.service.TheMovieDBService;
 
 @RestController
 public class TheMovieDBController {
