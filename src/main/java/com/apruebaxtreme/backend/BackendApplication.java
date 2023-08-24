@@ -13,7 +13,7 @@ import com.apruebaxtreme.backend.dto.MovieResultsDTO;
 
 
 @SpringBootApplication
-public class BackendApplication implements CommandLineRunner{
+public class BackendApplication {
 
 	@Autowired
 	RestTemplate restTemplate;
@@ -23,14 +23,7 @@ public class BackendApplication implements CommandLineRunner{
 		SpringApplication.run(BackendApplication.class, args);
 	}
 
-	public void run(String[] args){
-
-		String url = "https://api.themoviedb.org/3/search/movie?query=rings";
-		String api_key="d8a89bad4afd76e415ee96730b766d8b";
-		ResponseEntity<MovieResultsDTO> movieResponse = restTemplate.exchange(url+"&api_key="+api_key, HttpMethod.GET, null, MovieResultsDTO.class);
-
-		movieResponse.getBody().getResults().stream().forEach(movie->System.out.println(movie));
-	}
+	
 
 	
 }
