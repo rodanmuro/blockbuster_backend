@@ -22,7 +22,6 @@ public class PeliculaCatalogoController {
         PeliculaCatalogo peliculaCatalogoGuardada = peliculaCatalogoService.guardarPeliculaCatalogo(peliculaCatalogo);
 
         return new ResponseEntity<PeliculaCatalogo>(peliculaCatalogoGuardada, HttpStatus.OK);
-
     }
     
 }
