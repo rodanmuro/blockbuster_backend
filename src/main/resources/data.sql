@@ -11,3 +11,17 @@ INSERT INTO "PELICULA_CATALOGO" VALUES
 (DATE '2019-08-01', 6.867, 5, 'en', 'Ever since US Diplomatic Security Service Agent Hobbs and lawless outcast Shaw first faced off, they just have traded smack talk and body blows. But when cyber-genetically enhanced anarchist Brixton''s ruthless actions threaten the future of humanity, they join forces to defeat him.', '/qRyy2UmjC5ur9bDi3kpNNRCc5nc.jpg', 'Fast & Furious Presents: Hobbs & Shaw'),
 
 (DATE '2006-06-03', 6.454, 6, 'en', 'In order to avoid a jail sentence, Sean Boswell heads to Tokyo to live with his military father. In a low-rent section of the city, Shaun gets caught up in the underground world of drift racing', '/wTLaII3WAkQcsyiF4sI6PlXZ0dF.jpg', 'The Fast and the Furious: Tokyo Drift');
+
+INSERT INTO "USUARIO" (email, password, rol)VALUES
+('admin@email.com', '12345', 'ADMIN'),
+('user1@email.com', '12345', 'USER'),
+('user2@email.com', '12345', 'USER'),
+('user3@email.com', '12345', 'USER');
+
+INSERT INTO "PELICULA_ALQUILADA" (usuario_id, pelicula_catalogo_id_pelicula)VALUES
+(2,1),
+(2,2),
+(3,1),
+(3,2),
+(4,3),
+(4,4);

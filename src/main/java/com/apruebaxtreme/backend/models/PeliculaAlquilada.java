@@ -19,7 +19,7 @@ import lombok.Setter;
 public class PeliculaAlquilada {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long idAlquilada;
 
     @ManyToOne
