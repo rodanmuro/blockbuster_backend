@@ -8,6 +8,6 @@ import com.apruebaxtreme.backend.models.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
-    Optional<Usuario> findyByEmail(String email);
+    Optional<Usuario> findByEmail(String email);
     
 }
