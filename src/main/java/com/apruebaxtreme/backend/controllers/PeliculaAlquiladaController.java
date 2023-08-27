@@ -38,8 +38,15 @@ public class PeliculaAlquiladaController {
     @PostMapping("/peliculaalquilada")
     public ResponseEntity<PeliculaAlquiladaDTO> alquilarPelicula(@RequestBody IdPeliculaDTO idPeliculaDTO){
 
-             peliculaAlquiladaService.alquilarPelicula(idPeliculaDTO.getIdPelicula());
+        try {
+            PeliculaAlquiladaDTO peliculaAlquiladaDTO 
+            = peliculaAlquiladaService.alquilarPelicula(idPeliculaDTO.getIdPelicula());
 
+            return new ResponseEntity<>(peliculaAlquiladaDTO, HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+             
     }
 
     

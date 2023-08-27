@@ -49,7 +49,7 @@ public class PeliculaAlquiladaService {
         return peliculasAlquiladasDTO;             
     }
 
-    public PeliculaAlquilada alquilarPelicula(Integer idPelicula) throws NotFoundException{
+    public PeliculaAlquiladaDTO alquilarPelicula(Integer idPelicula) throws NotFoundException{
 
         Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
         optionalUsuario.orElseThrow(()->new NotFoundException());
@@ -65,8 +65,13 @@ public class PeliculaAlquiladaService {
 
         PeliculaAlquilada peliculaAlquilada = new PeliculaAlquilada(usuario, peliculaCatalogo);
 
-        return peliculaAlquiladaRepository.save(peliculaAlquilada);
+        PeliculaAlquilada peliculaAlquilada2 
+        = peliculaAlquiladaRepository.save(peliculaAlquilada);
 
+        PeliculaAlquiladaDTO peliculaAlquiladaDTO 
+        = new PeliculaAlquiladaDTO(peliculaAlquilada2.getIdAlquilada(), peliculaCatalogo);
+
+        return peliculaAlquiladaDTO;
     }
     
 }
