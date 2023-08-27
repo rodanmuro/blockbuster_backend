@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.apruebaxtreme.backend.dto.IdPeliculaDTO;
 import com.apruebaxtreme.backend.dto.PeliculaAlquiladaDTO;
+import com.apruebaxtreme.backend.dto.PeliculaAlquiladaDTOError;
+import com.apruebaxtreme.backend.exceptions.PeliculaAlquiladaDuplicadaException;
 import com.apruebaxtreme.backend.models.PeliculaAlquilada;
 import com.apruebaxtreme.backend.service.PeliculaAlquiladaService;
 
@@ -45,6 +47,11 @@ public class PeliculaAlquiladaController {
             return new ResponseEntity<>(peliculaAlquiladaDTO, HttpStatus.OK);
         } catch (NotFoundException e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        } catch(PeliculaAlquiladaDuplicadaException pade){
+
+            PeliculaAlquiladaDTOError peliculaAlquiladaDTOError
+            =new PeliculaAlquiladaDTOError(null, null, "La película que intentas alquilar ya está en tu base de datos de películas alquiladas");
+            return new ResponseEntity<>(peliculaAlquiladaDTOError, HttpStatus.INTERNAL_SERVER_ERROR);
         }
              
     }

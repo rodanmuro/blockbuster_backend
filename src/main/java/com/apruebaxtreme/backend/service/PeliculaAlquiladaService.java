@@ -9,6 +9,7 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.apruebaxtreme.backend.dto.PeliculaAlquiladaDTO;
+import com.apruebaxtreme.backend.exceptions.PeliculaAlquiladaDuplicadaException;
 import com.apruebaxtreme.backend.models.PeliculaAlquilada;
 import com.apruebaxtreme.backend.models.PeliculaCatalogo;
 import com.apruebaxtreme.backend.models.Usuario;
@@ -49,7 +50,7 @@ public class PeliculaAlquiladaService {
         return peliculasAlquiladasDTO;             
     }
 
-    public PeliculaAlquiladaDTO alquilarPelicula(Integer idPelicula) throws NotFoundException{
+    public PeliculaAlquiladaDTO alquilarPelicula(Integer idPelicula) throws NotFoundException, PeliculaAlquiladaDuplicadaException{
 
         Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
         optionalUsuario.orElseThrow(()->new NotFoundException());
@@ -62,6 +63,12 @@ public class PeliculaAlquiladaService {
 
         Usuario usuario = optionalUsuario.get();
         PeliculaCatalogo peliculaCatalogo = peliculasCatalogo.get(0);
+
+        List<PeliculaAlquilada> peliculasAlquiladas = peliculaAlquiladaRepository.findByPeliculaCatalogo(peliculaCatalogo);
+
+        if(peliculasAlquiladas.size()>0){
+            throw new PeliculaAlquiladaDuplicadaException("La pelicula que se quiera alquilar ya lo está");
+        }
 
         PeliculaAlquilada peliculaAlquilada = new PeliculaAlquilada(usuario, peliculaCatalogo);
 
