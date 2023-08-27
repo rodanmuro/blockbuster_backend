@@ -10,4 +10,6 @@ public interface PeliculaCatalogoRepository extends JpaRepository<PeliculaCatalo
     
     List<PeliculaCatalogo> findByTitleContainingIgnoreCase(String query);
 
+    List<PeliculaCatalogo> findByIdPelicula(Integer idPelicula);
+
 }

@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.apruebaxtreme.backend.dto.PeliculaAlquiladaDTO;
 import com.apruebaxtreme.backend.models.PeliculaAlquilada;
+import com.apruebaxtreme.backend.models.PeliculaCatalogo;
 import com.apruebaxtreme.backend.models.Usuario;
 import com.apruebaxtreme.backend.repository.PeliculaAlquiladaRepository;
+import com.apruebaxtreme.backend.repository.PeliculaCatalogoRepository;
 import com.apruebaxtreme.backend.repository.UsuarioRepository;
 
 @Service
@@ -19,6 +21,9 @@ public class PeliculaAlquiladaService {
 
     @Autowired
     UsuarioRepository usuarioRepository;
+
+    @Autowired
+    PeliculaCatalogoRepository peliculaCatalogoRepository;
 
     private String email="user3@email.com";
 
@@ -42,6 +47,26 @@ public class PeliculaAlquiladaService {
         ).collect(Collectors.toList());
 
         return peliculasAlquiladasDTO;             
+    }
+
+    public PeliculaAlquilada alquilarPelicula(Integer idPelicula) throws NotFoundException{
+
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
+        optionalUsuario.orElseThrow(()->new NotFoundException());
+
+        List<PeliculaCatalogo> peliculasCatalogo = peliculaCatalogoRepository.findByIdPelicula(idPelicula);
+
+        if(peliculasCatalogo.size()==0){
+            throw new NotFoundException();
+        }
+
+        Usuario usuario = optionalUsuario.get();
+        PeliculaCatalogo peliculaCatalogo = peliculasCatalogo.get(0);
+
+        PeliculaAlquilada peliculaAlquilada = new PeliculaAlquilada(usuario, peliculaCatalogo);
+
+        return peliculaAlquiladaRepository.save(peliculaAlquilada);
+
     }
     
 }

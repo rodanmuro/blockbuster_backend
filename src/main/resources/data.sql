@@ -1,4 +1,6 @@
-INSERT INTO "PELICULA_CATALOGO" VALUES
+INSERT INTO "PELICULA_CATALOGO" 
+(release_date,vote_average, id_pelicula, original_language, overview,poster_path,title)
+VALUES
 
 (DATE '2012-04-25', 7.711, 1, 'en', 'When an unexpected enemy emerges and threatens global safety and security, Nick Fury, director of the international peacekeeping agency known as S.H.I.E.L.D., finds himself in need of a team to pull the world back from the brink of disaster. Spanning the globe, a daring recruitment effort begins!', '/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg', 'The Avengers'),
 

@@ -7,14 +7,17 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.apruebaxtreme.backend.dto.IdPeliculaDTO;
 import com.apruebaxtreme.backend.dto.PeliculaAlquiladaDTO;
 import com.apruebaxtreme.backend.models.PeliculaAlquilada;
 import com.apruebaxtreme.backend.service.PeliculaAlquiladaService;
 
 @RestController
-public class PeliculaAlquiladaControlador {
+public class PeliculaAlquiladaController {
 
     @Autowired
     PeliculaAlquiladaService peliculaAlquiladaService;
@@ -31,5 +34,13 @@ public class PeliculaAlquiladaControlador {
         }
         
     }
+
+    @PostMapping("/peliculaalquilada")
+    public ResponseEntity<PeliculaAlquiladaDTO> alquilarPelicula(@RequestBody IdPeliculaDTO idPeliculaDTO){
+
+             peliculaAlquiladaService.alquilarPelicula(idPeliculaDTO.getIdPelicula());
+
+    }
+
     
 }
