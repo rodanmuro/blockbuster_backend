@@ -80,5 +80,21 @@ public class PeliculaAlquiladaService {
 
         return peliculaAlquiladaDTO;
     }
+
+    public void devolverPelicula(Integer idAlquilada) throws NotFoundException{
+
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
+        optionalUsuario.orElseThrow(()->new NotFoundException());
+
+        Usuario usuario = optionalUsuario.get();
+
+        List<PeliculaAlquilada> listaPeliculasAlquiladas = peliculaAlquiladaRepository.findByIdAlquiladaAndUsuario((long)idAlquilada, usuario);
+
+        if(listaPeliculasAlquiladas.size()==0){
+            throw new NotFoundException();
+        }
+
+        peliculaAlquiladaRepository.deleteById((long)idAlquilada);
+    }
     
 }
