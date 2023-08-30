@@ -1,6 +1,7 @@
 package com.apruebaxtreme.backend.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,10 +15,14 @@ public class UsuarioController {
 
     @Autowired
     UsuarioService usuarioService;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
     
     @PostMapping("/usuario")
     public UsuarioDTO registrarUsuario(@RequestBody Usuario usuario){
          usuario.setRol("USER");
+         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
          
          if(usuario.getPassword().length()<8){
             return new UsuarioDTO(usuario.getEmail(), "longitud de contraseña menor a 8");
