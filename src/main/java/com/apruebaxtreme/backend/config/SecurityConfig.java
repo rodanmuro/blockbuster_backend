@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 public class SecurityConfig {
@@ -18,12 +19,21 @@ public class SecurityConfig {
         )
         .authorizeHttpRequests(
             auth->{
-                auth.requestMatchers(HttpMethod.POST, "/usuario").permitAll();
+                auth.requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/usuario")).permitAll();
+                
+                auth.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll();
+                
                 auth.anyRequest().authenticated();
             }
         )
         .formLogin(
             formLogin->formLogin.permitAll()
+        );
+
+        http.headers(
+            headers->headers.frameOptions(
+                frameOptions->frameOptions.disable()
+            )
         );
 
         return http.build();
