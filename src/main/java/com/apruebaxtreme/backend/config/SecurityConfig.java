@@ -22,7 +22,15 @@ public class SecurityConfig {
                 auth.requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/usuario")).permitAll();
                 
                 auth.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll();
+
+                auth.requestMatchers(AntPathRequestMatcher.antMatcher("/themoviedb")).hasAuthority("ADMIN");
+
+                auth.requestMatchers(AntPathRequestMatcher.antMatcher("/peliculaalquilada")).hasAuthority("USER");
                 
+                auth.requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/peliculacatalogo")).hasAnyAuthority("ADMIN", "USER");
+                auth.requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/peliculacatalogo")).hasAuthority("ADMIN");
+                auth.requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.DELETE, "/peliculacatalogo")).hasAuthority("ADMIN");
+
                 auth.anyRequest().authenticated();
             }
         )

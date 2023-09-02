@@ -28,8 +28,8 @@ public class PeliculaCatalogoController {
     public ResponseEntity<List<PeliculaCatalogo>> obtenerPeliculasCatalogo(@RequestParam(required = false) String query){
 
         if(query==null){
-            List<PeliculaCatalogo> listadoVacio = new ArrayList<>();
-            return  ResponseEntity.ok(listadoVacio);
+            List<PeliculaCatalogo> listadoTodoCatalogo = peliculaCatalogoService.obtenerPeliculasCatalogo();
+            return  ResponseEntity.ok(listadoTodoCatalogo);
         }
 
         List<PeliculaCatalogo> listadoPeliculas = peliculaCatalogoService.obtenerPeliculasCatalogo(query);

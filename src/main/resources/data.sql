@@ -14,11 +14,13 @@ VALUES
 
 (DATE '2006-06-03', 6.454, 6, 'en', 'In order to avoid a jail sentence, Sean Boswell heads to Tokyo to live with his military father. In a low-rent section of the city, Shaun gets caught up in the underground world of drift racing', '/wTLaII3WAkQcsyiF4sI6PlXZ0dF.jpg', 'The Fast and the Furious: Tokyo Drift');
 
+/*La contraseña del usuario tipo USER es usuario, y la de ADMIN es holamundo*/
 INSERT INTO "USUARIO" (email, password, rol)VALUES
-('admin@email.com', '12345', 'ADMIN'),
-('user1@email.com', '12345', 'USER'),
-('user2@email.com', '12345', 'USER'),
-('user3@email.com', '12345', 'USER');
+('admin@email.com','$2a$10$SgsltMHoYYbT9HtV.xkPTetlJE8M7lPipCCcPEiENG96BglYzo4Gq',	'ADMIN'),
+('user0@email.com', '$2a$10$2T7FGc/JKLFfdwe9ooTBZuiKWj1TmpUz7sfrOzo7dMSES.B4OzUfC', 'USER'),
+('user1@email.com', '$2a$10$2T7FGc/JKLFfdwe9ooTBZuiKWj1TmpUz7sfrOzo7dMSES.B4OzUfC', 'USER'),
+('user2@email.com', '$2a$10$2T7FGc/JKLFfdwe9ooTBZuiKWj1TmpUz7sfrOzo7dMSES.B4OzUfC', 'USER'),
+('user3@email.com', '$2a$10$2T7FGc/JKLFfdwe9ooTBZuiKWj1TmpUz7sfrOzo7dMSES.B4OzUfC', 'USER');
 
 INSERT INTO "PELICULA_ALQUILADA" (usuario_id, pelicula_catalogo_id_pelicula)VALUES
 (2,1),

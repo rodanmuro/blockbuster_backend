@@ -16,6 +16,10 @@ public class PeliculaCatalogoService {
     @Autowired
     PeliculaCatalogoRepository peliculaCatalogoRepository;
 
+    public List<PeliculaCatalogo> obtenerPeliculasCatalogo(){
+        return peliculaCatalogoRepository.findAll();
+    }
+
     public List<PeliculaCatalogo> obtenerPeliculasCatalogo(String query){
         return peliculaCatalogoRepository.findByTitleContainingIgnoreCase(query);
     }
