@@ -3,12 +3,18 @@ package com.apruebaxtreme.backend.filters;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.apruebaxtreme.backend.dto.JwtDTO;
 import com.apruebaxtreme.backend.dto.UsernamePasswordDTO;
+import com.apruebaxtreme.backend.util.JwtUtils;
+import com.apruebaxtreme.backend.util.ResponseError;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.FilterChain;
@@ -42,6 +48,34 @@ public class JWTLoginFilter extends OncePerRequestFilter{
 
                 String method = request.getMethod();
                 String uri = request.getRequestURI();// /login
+
+                UsernamePasswordDTO usernamePasswordDTO = usernamePasswordDTO(request);
+
+                String username = usernamePasswordDTO.getUsername();
+                String password = usernamePasswordDTO.getPassword();
+
+                if(method.equals("POST") && uri.equals("/login")){
+                    if(username!=null && password!=null){
+
+                        UsernamePasswordAuthenticationToken auth =
+                        new UsernamePasswordAuthenticationToken(username, password);
+
+                        try {
+                            Authentication authenticated = authenticationManager.authenticate(auth);    
+                            
+                            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                            new ObjectMapper().writeValue(response.getWriter(), new JwtDTO(JwtUtils.crearJwtToken(username)));
+                        } catch (Exception e) {
+                            ResponseError.responseError(response, "bad credentials");
+    
+                        }
+
+                    }else{
+                        ResponseError.responseError(response, "null credentials");
+                    }
+                }else{
+                    filterChain.doFilter(request, response);
+                }
 
         
     }

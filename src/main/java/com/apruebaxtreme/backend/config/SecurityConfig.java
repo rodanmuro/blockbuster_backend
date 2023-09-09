@@ -1,15 +1,21 @@
 package com.apruebaxtreme.backend.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import com.apruebaxtreme.backend.filters.JWTLoginFilter;
 
 @Configuration
 public class SecurityConfig {
+    @Autowired
+    JWTLoginFilter jwtLoginFilter;
     
     @Bean
     public SecurityFilterChain filterSecurity(HttpSecurity http) throws Exception{
@@ -36,9 +42,11 @@ public class SecurityConfig {
                 auth.anyRequest().authenticated();
             }
         )
-        .formLogin(
-            formLogin->formLogin.permitAll()
-        );
+        .addFilterBefore(jwtLoginFilter, UsernamePasswordAuthenticationFilter.class)
+        .sessionManagement(
+            session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        )
+        ;
 
         http.headers(
             headers->headers.frameOptions(
