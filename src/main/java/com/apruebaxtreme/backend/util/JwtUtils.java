@@ -37,4 +37,11 @@ public class JwtUtils {
         }
 
     }
+
+    public static String username(String jwtToken){
+
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        return verifier.verify(jwtToken).getClaim("username").asString();
+
+    }
 }
