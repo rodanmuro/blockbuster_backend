@@ -11,11 +11,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.apruebaxtreme.backend.filters.JWTLoginFilter;
+import com.apruebaxtreme.backend.filters.JWTValidateFilter;
 
 @Configuration
 public class SecurityConfig {
     @Autowired
     JWTLoginFilter jwtLoginFilter;
+
+    @Autowired
+    JWTValidateFilter jwtValidateFilter;
     
     @Bean
     public SecurityFilterChain filterSecurity(HttpSecurity http) throws Exception{
@@ -43,6 +47,7 @@ public class SecurityConfig {
             }
         )
         .addFilterBefore(jwtLoginFilter, UsernamePasswordAuthenticationFilter.class)
+        .addFilterBefore(jwtValidateFilter, UsernamePasswordAuthenticationFilter.class)
         .sessionManagement(
             session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         )
