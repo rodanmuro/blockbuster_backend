@@ -15,7 +15,8 @@ public class TheMovieDBService {
     @Autowired
 	RestTemplate restTemplate;
 
-    private String END_POINT = "https://api.themoviedb.org/3/search/movie?";
+    private String END_POINT_SEARCH = "https://api.themoviedb.org/3/search/movie?";
+    private String END_POINT_DISCOVERY = "https://api.themoviedb.org/3/discover/movie?";
 
     @Value("${movies.api.key}")
     private String API_KEY;
@@ -23,9 +24,11 @@ public class TheMovieDBService {
     public MovieResultsDTO movieResultsDTO(String query){
         if(query==null){
             query="";
+            ResponseEntity<MovieResultsDTO> movieResponse = restTemplate.exchange(END_POINT_DISCOVERY+"api_key="+API_KEY, HttpMethod.GET, null, MovieResultsDTO.class);
+		return movieResponse.getBody();
         }
 
-		ResponseEntity<MovieResultsDTO> movieResponse = restTemplate.exchange(END_POINT+"&api_key="+API_KEY+"&query="+query, HttpMethod.GET, null, MovieResultsDTO.class);
+		ResponseEntity<MovieResultsDTO> movieResponse = restTemplate.exchange(END_POINT_SEARCH+"&api_key="+API_KEY+"&query="+query, HttpMethod.GET, null, MovieResultsDTO.class);
 		return movieResponse.getBody();
     }
     
