@@ -9,8 +9,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 
 import com.apruebaxtreme.backend.filters.JWTLoginFilter;
 import com.apruebaxtreme.backend.filters.JWTValidateFilter;
@@ -22,18 +20,12 @@ public class SecurityConfig {
 
     @Autowired
     JWTValidateFilter jwtValidateFilter;
-
-    @Autowired
-    CorsConfigurationSource corsConfigurationSource;
     
     @Bean
     public SecurityFilterChain filterSecurity(HttpSecurity http) throws Exception{
 
         
         http
-        .cors(
-                cors->cors.configurationSource(corsConfigurationSource)
-        )
         .csrf(
             csrf->csrf.disable()
         )
