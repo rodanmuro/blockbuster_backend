@@ -12,7 +12,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 public class JwtUtils {
 
     private static String secret = "apruebaxtreme";
-    private static Long duracion = 30000L;
+    private static Long duracion = 10000L;
     private static Algorithm algorithm = Algorithm.HMAC256(secret);
     
     public static String crearJwtToken(String username){

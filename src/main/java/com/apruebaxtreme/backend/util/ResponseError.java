@@ -20,7 +20,7 @@ public class ResponseError {
         Map <String, String> errorDetails = new HashMap<>();
         errorDetails.put("error", mensaje);
 
-        response.setStatus(HttpStatus.FORBIDDEN.value());
+        response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
         new ObjectMapper().writeValue(response.getWriter(), errorDetails);

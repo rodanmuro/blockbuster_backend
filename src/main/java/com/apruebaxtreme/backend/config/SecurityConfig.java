@@ -1,5 +1,7 @@
 package com.apruebaxtreme.backend.config;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +11,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.apruebaxtreme.backend.filters.JWTLoginFilter;
 import com.apruebaxtreme.backend.filters.JWTValidateFilter;
@@ -20,44 +25,48 @@ public class SecurityConfig {
 
     @Autowired
     JWTValidateFilter jwtValidateFilter;
-    
+
+    @Autowired
+    CorsConfigurationSource corsConfigurationSource;
+
     @Bean
-    public SecurityFilterChain filterSecurity(HttpSecurity http) throws Exception{
+    public SecurityFilterChain filterSecurity(HttpSecurity http) throws Exception {
 
-        
         http
-        .csrf(
-            csrf->csrf.disable()
-        )
-        .authorizeHttpRequests(
-            auth->{
-                auth.requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/usuario")).permitAll();
+        .cors(cors->cors.configurationSource(corsConfigurationSource))
+                .csrf(
+                        csrf -> csrf.disable())
                 
-                auth.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll();
+                .authorizeHttpRequests(
+                        auth -> {
+                            auth.requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/usuario"))
+                                    .permitAll();
 
-                auth.requestMatchers(AntPathRequestMatcher.antMatcher("/themoviedb")).hasAuthority("ADMIN");
+                            auth.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll();
 
-                auth.requestMatchers(AntPathRequestMatcher.antMatcher("/peliculaalquilada")).hasAuthority("USER");
-                
-                auth.requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/peliculacatalogo")).hasAnyAuthority("ADMIN", "USER");
-                auth.requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/peliculacatalogo")).hasAuthority("ADMIN");
-                auth.requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.DELETE, "/peliculacatalogo")).hasAuthority("ADMIN");
+                            auth.requestMatchers(AntPathRequestMatcher.antMatcher("/themoviedb")).hasAuthority("ADMIN");
 
-                auth.anyRequest().authenticated();
-            }
-        )
-        .addFilterBefore(jwtLoginFilter, UsernamePasswordAuthenticationFilter.class)
-        .addFilterBefore(jwtValidateFilter, UsernamePasswordAuthenticationFilter.class)
-        .sessionManagement(
-            session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        )
-        ;
+                            auth.requestMatchers(AntPathRequestMatcher.antMatcher("/peliculaalquilada"))
+                                    .hasAuthority("USER");
+
+                            auth.requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/peliculacatalogo"))
+                                    .hasAnyAuthority("ADMIN", "USER");
+                            auth.requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/peliculacatalogo"))
+                                    .hasAuthority("ADMIN");
+                            auth.requestMatchers(
+                                    AntPathRequestMatcher.antMatcher(HttpMethod.DELETE, "/peliculacatalogo"))
+                                    .hasAuthority("ADMIN");
+
+                            auth.anyRequest().authenticated();
+                        })
+                .addFilterBefore(jwtLoginFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtValidateFilter, UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement(
+                        session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.headers(
-            headers->headers.frameOptions(
-                frameOptions->frameOptions.disable()
-            )
-        );
+                headers -> headers.frameOptions(
+                        frameOptions -> frameOptions.disable()));
 
         return http.build();
 
