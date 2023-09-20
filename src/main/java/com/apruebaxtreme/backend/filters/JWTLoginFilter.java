@@ -1,12 +1,14 @@
 package com.apruebaxtreme.backend.filters;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -63,8 +65,10 @@ public class JWTLoginFilter extends OncePerRequestFilter{
                         try {
                             Authentication authenticated = authenticationManager.authenticate(auth);    
                             
+                            GrantedAuthority authority = (GrantedAuthority)authenticated.getAuthorities().toArray()[0];
+
                             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-                            new ObjectMapper().writeValue(response.getWriter(), new JwtDTO(JwtUtils.crearJwtToken(username)));
+                            new ObjectMapper().writeValue(response.getWriter(), new JwtDTO(JwtUtils.crearJwtToken(username, authority.getAuthority())));
                         } catch (Exception e) {
                             ResponseError.responseError(response, "bad credentials");
     

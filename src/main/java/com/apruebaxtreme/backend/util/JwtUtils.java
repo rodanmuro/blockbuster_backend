@@ -15,9 +15,10 @@ public class JwtUtils {
     private static Long duracion = 1440*60000L;
     private static Algorithm algorithm = Algorithm.HMAC256(secret);
     
-    public static String crearJwtToken(String username){
+    public static String crearJwtToken(String username, String role){
         String jwtToken = JWT.create()
         .withClaim("username",username)
+        .withClaim("role",role)
         .withExpiresAt(new Date(System.currentTimeMillis()+duracion))
         .sign(algorithm);
 
