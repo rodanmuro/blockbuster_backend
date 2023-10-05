@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.apruebaxtreme.backend.dto.PeliculaAlquiladaDTO;
@@ -26,12 +28,14 @@ public class PeliculaAlquiladaService {
     @Autowired
     PeliculaCatalogoRepository peliculaCatalogoRepository;
 
-    private String email="user3@email.com";
+    private String email="user0@email.com";
 
     @Autowired
     PeliculaAlquiladaRepository peliculaAlquiladaRepository;
 
     public List<PeliculaAlquiladaDTO> obtenerPeliculasAlquiladas() throws NotFoundException{
+
+        email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
 
@@ -64,10 +68,11 @@ public class PeliculaAlquiladaService {
         Usuario usuario = optionalUsuario.get();
         PeliculaCatalogo peliculaCatalogo = peliculasCatalogo.get(0);
 
-        List<PeliculaAlquilada> peliculasAlquiladas = peliculaAlquiladaRepository.findByPeliculaCatalogo(peliculaCatalogo);
+        List<PeliculaAlquilada> peliculasAlquiladas 
+        = peliculaAlquiladaRepository.findByUsuarioAndPeliculaCatalogo(usuario, peliculaCatalogo);
 
         if(peliculasAlquiladas.size()>0){
-            throw new PeliculaAlquiladaDuplicadaException("La pelicula que se quiera alquilar ya lo está");
+            throw new PeliculaAlquiladaDuplicadaException("La pelicula que se quiera alquilar ya lo esta");
         }
 
         PeliculaAlquilada peliculaAlquilada = new PeliculaAlquilada(usuario, peliculaCatalogo);

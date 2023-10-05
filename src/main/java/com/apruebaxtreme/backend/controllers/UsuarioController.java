@@ -18,16 +18,17 @@ public class UsuarioController {
 
     @Autowired
     PasswordEncoder passwordEncoder;
-    
-    @PostMapping("/usuario")
-    public UsuarioDTO registrarUsuario(@RequestBody Usuario usuario){
-         usuario.setRol("USER");
-         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
-         
-         if(usuario.getPassword().length()<8){
-            return new UsuarioDTO(usuario.getEmail(), "longitud de contraseña menor a 8");
-         }
 
-         return usuarioService.registrarUsuario(usuario);
+    @PostMapping("/usuario")
+    public UsuarioDTO registrarUsuario(@RequestBody Usuario usuario) {
+
+        if (usuario.getPassword().length() < 8) {
+            return new UsuarioDTO(usuario.getEmail(), "longitud de contraseña menor a 8");
+        }
+
+        usuario.setRol("USER");
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+
+        return usuarioService.registrarUsuario(usuario);
     }
 }

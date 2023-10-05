@@ -1,18 +1,18 @@
 INSERT INTO "PELICULA_CATALOGO" 
-(release_date,vote_average, id_pelicula, original_language, overview,poster_path,title)
+(release_date,vote_average, original_language, overview,poster_path,title)
 VALUES
 
-(DATE '2012-04-25', 7.711, 1, 'en', 'When an unexpected enemy emerges and threatens global safety and security, Nick Fury, director of the international peacekeeping agency known as S.H.I.E.L.D., finds himself in need of a team to pull the world back from the brink of disaster. Spanning the globe, a daring recruitment effort begins!', '/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg', 'The Avengers'),
+(DATE '2012-04-25', 7.711,  'en', 'When an unexpected enemy emerges and threatens global safety and security, Nick Fury, director of the international peacekeeping agency known as S.H.I.E.L.D., finds himself in need of a team to pull the world back from the brink of disaster. Spanning the globe, a daring recruitment effort begins!', '/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg', 'The Avengers'),
 
-(DATE '2018-04-25', 8.256, 2, 'en', 'As the Avengers and their allies have continued to protect the world from threats too large for any one hero to handle, a new danger has emerged from the cosmic shadows: Thanos. A despot of intergalactic infamy, his goal is to collect all six Infinity Stones, artifacts of unimaginable power, and use them to inflict his twisted will on all of reality. Everything the Avengers have fought for has led up to this moment - the fate of Earth and existence itself has never been more uncertain.', '/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg', 'Avengers: Infinity War'),
+(DATE '2018-04-25', 8.256,  'en', 'As the Avengers and their allies have continued to protect the world from threats too large for any one hero to handle, a new danger has emerged from the cosmic shadows: Thanos. A despot of intergalactic infamy, his goal is to collect all six Infinity Stones, artifacts of unimaginable power, and use them to inflict his twisted will on all of reality. Everything the Avengers have fought for has led up to this moment - the fate of Earth and existence itself has never been more uncertain.', '/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg', 'Avengers: Infinity War'),
 
-(DATE '1998-12-31', 7.265, 3, 'en', 'The film is composed of receding planes in a landscape: a back garden and the houses beyond. The wooden lattice fence, visible in the image, marks the border between enclosed and open, private and public space, and forms both a fulcrum for the work and a formal grid by which the shots are framed and organised.', '/AfFD10ZqEx2vkxM2yvRZkybsGB7.jpg', 'Matrix'),
+(DATE '1998-12-31', 7.265, 'en', 'The film is composed of receding planes in a landscape: a back garden and the houses beyond. The wooden lattice fence, visible in the image, marks the border between enclosed and open, private and public space, and forms both a fulcrum for the work and a formal grid by which the shots are framed and organised.', '/AfFD10ZqEx2vkxM2yvRZkybsGB7.jpg', 'Matrix'),
 
-(DATE '2021-12-16', 6.496, 4, 'en', 'Plagued by strange memories, Neo''s life takes an unexpected turn when he finds himself back inside the Matrix.', '/8c4a8kE7PizaGQQnditMmI1xbRp.jpg', 'The Matrix Resurrections'),
+(DATE '2021-12-16', 6.496, 'en', 'Plagued by strange memories, Neo''s life takes an unexpected turn when he finds himself back inside the Matrix.', '/8c4a8kE7PizaGQQnditMmI1xbRp.jpg', 'The Matrix Resurrections'),
 
-(DATE '2019-08-01', 6.867, 5, 'en', 'Ever since US Diplomatic Security Service Agent Hobbs and lawless outcast Shaw first faced off, they just have traded smack talk and body blows. But when cyber-genetically enhanced anarchist Brixton''s ruthless actions threaten the future of humanity, they join forces to defeat him.', '/qRyy2UmjC5ur9bDi3kpNNRCc5nc.jpg', 'Fast & Furious Presents: Hobbs & Shaw'),
+(DATE '2019-08-01', 6.867,  'en', 'Ever since US Diplomatic Security Service Agent Hobbs and lawless outcast Shaw first faced off, they just have traded smack talk and body blows. But when cyber-genetically enhanced anarchist Brixton''s ruthless actions threaten the future of humanity, they join forces to defeat him.', '/qRyy2UmjC5ur9bDi3kpNNRCc5nc.jpg', 'Fast & Furious Presents: Hobbs & Shaw'),
 
-(DATE '2006-06-03', 6.454, 6, 'en', 'In order to avoid a jail sentence, Sean Boswell heads to Tokyo to live with his military father. In a low-rent section of the city, Shaun gets caught up in the underground world of drift racing', '/wTLaII3WAkQcsyiF4sI6PlXZ0dF.jpg', 'The Fast and the Furious: Tokyo Drift');
+(DATE '2006-06-03', 6.454,  'en', 'In order to avoid a jail sentence, Sean Boswell heads to Tokyo to live with his military father. In a low-rent section of the city, Shaun gets caught up in the underground world of drift racing', '/wTLaII3WAkQcsyiF4sI6PlXZ0dF.jpg', 'The Fast and the Furious: Tokyo Drift');
 
 /*La contraseña del usuario tipo USER es usuario, y la de ADMIN es holamundo*/
 INSERT INTO "USUARIO" (email, password, rol)VALUES

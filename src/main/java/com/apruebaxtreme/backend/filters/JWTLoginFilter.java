@@ -25,17 +25,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
-public class JWTLoginFilter extends OncePerRequestFilter{
+public class JWTLoginFilter extends OncePerRequestFilter {
 
     @Autowired
     AuthenticationManager authenticationManager;
 
-    private UsernamePasswordDTO usernamePasswordDTO(HttpServletRequest request){
+    private UsernamePasswordDTO usernamePasswordDTO(HttpServletRequest request) {
 
         try {
             byte[] inputStreamBytes = StreamUtils.copyToByteArray(request.getInputStream());
-            UsernamePasswordDTO usernamePasswordDTO = 
-            new ObjectMapper().readValue(inputStreamBytes, UsernamePasswordDTO.class);
+            UsernamePasswordDTO usernamePasswordDTO = new ObjectMapper().readValue(inputStreamBytes,
+                    UsernamePasswordDTO.class);
             return usernamePasswordDTO;
         } catch (Exception e) {
             // TODO: handle exception
@@ -48,40 +48,38 @@ public class JWTLoginFilter extends OncePerRequestFilter{
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-                String method = request.getMethod();
-                String uri = request.getRequestURI();// /login
+        String method = request.getMethod();
+        String uri = request.getRequestURI();// /login
 
-                UsernamePasswordDTO usernamePasswordDTO = usernamePasswordDTO(request);
+        if (method.equals("POST") && uri.equals("/login")) {
+            UsernamePasswordDTO usernamePasswordDTO = usernamePasswordDTO(request);
 
-                String username = usernamePasswordDTO.getUsername();
-                String password = usernamePasswordDTO.getPassword();
+            String username = usernamePasswordDTO.getUsername();
+            String password = usernamePasswordDTO.getPassword();
+            if (username != null && password != null) {
 
-                if(method.equals("POST") && uri.equals("/login")){
-                    if(username!=null && password!=null){
+                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(username, password);
 
-                        UsernamePasswordAuthenticationToken auth =
-                        new UsernamePasswordAuthenticationToken(username, password);
+                try {
+                    Authentication authenticated = authenticationManager.authenticate(auth);
 
-                        try {
-                            Authentication authenticated = authenticationManager.authenticate(auth);    
-                            
-                            GrantedAuthority authority = (GrantedAuthority)authenticated.getAuthorities().toArray()[0];
+                    GrantedAuthority authority = (GrantedAuthority) authenticated.getAuthorities().toArray()[0];
 
-                            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-                            new ObjectMapper().writeValue(response.getWriter(), new JwtDTO(JwtUtils.crearJwtToken(username, authority.getAuthority())));
-                        } catch (Exception e) {
-                            ResponseError.responseError(response, "bad credentials");
-    
-                        }
+                    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                    new ObjectMapper().writeValue(response.getWriter(),
+                            new JwtDTO(JwtUtils.crearJwtToken(username, authority.getAuthority())));
+                } catch (Exception e) {
+                    ResponseError.responseError(response, "bad credentials");
 
-                    }else{
-                        ResponseError.responseError(response, "null credentials");
-                    }
-                }else{
-                    filterChain.doFilter(request, response);
                 }
 
-        
+            } else {
+                ResponseError.responseError(response, "null credentials");
+            }
+        } else {
+            filterChain.doFilter(request, response);
+        }
+
     }
-    
+
 }

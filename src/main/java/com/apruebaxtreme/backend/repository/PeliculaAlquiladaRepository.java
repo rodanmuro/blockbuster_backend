@@ -15,6 +15,8 @@ public interface PeliculaAlquiladaRepository extends JpaRepository<PeliculaAlqui
 
     List<PeliculaAlquilada> findByPeliculaCatalogo(PeliculaCatalogo peliculaCatalogo);
 
+    List<PeliculaAlquilada> findByUsuarioAndPeliculaCatalogo(Usuario usuario, PeliculaCatalogo peliculaCatalogo);
+
     List<PeliculaAlquilada> findByIdAlquiladaAndUsuario(Long idAlquilada, Usuario usuario);
     
 }
