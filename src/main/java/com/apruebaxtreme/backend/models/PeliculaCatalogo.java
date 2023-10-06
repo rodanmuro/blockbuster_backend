@@ -31,18 +31,22 @@ public class PeliculaCatalogo {
     private LocalDate release_date;
     private String original_language;
     private Float vote_average;
+    private String backdrop_path;
+    private Long id;
 
     @Column(columnDefinition = "TEXT")
     private String overview;
 
     public PeliculaCatalogo(String poster_path, String title, LocalDate release_date, String original_language,
-            Float vote_average, String overview) {
+            Float vote_average, String overview, String backdrop_path, Long id) {
         this.poster_path = poster_path;
         this.title = title;
         this.release_date = release_date;
         this.original_language = original_language;
         this.vote_average = vote_average;
         this.overview = overview;
+        this.backdrop_path=backdrop_path;
+        this.id=id;
     }
 
 }
